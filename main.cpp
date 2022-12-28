@@ -6,14 +6,14 @@
 #include "graph.h"
 #include "Airport.h"
 
-int addAirports(string file){
+queue<Airport> getAirports(string file){
     cout<<"Reading Airports file...\n";
     ifstream fout;
     file="../"+file;
     fout.open(file);
     string tempstream,airportCode,airportName,airportCity,airportCountry,airportLatitude,airportLongitude;
     getline (fout, tempstream);
-    int numAirports=0;
+    queue<Airport> airports;
     while (getline (fout, tempstream)) {
         stringstream it_stream(tempstream);
         getline(it_stream,airportCode,',');
@@ -26,20 +26,22 @@ int addAirports(string file){
         float latitude = stof(airportLatitude);
         float longitude = stof(airportLongitude);
         Airport airport = Airport(airportCode,airportName,airportCity,airportCountry,latitude,longitude);
-        numAirports++;
+        airports.push(airport);
     }
     cout << "Finished reading.\n";
     fout.close();
-    return numAirports;
+    return airports;
 }
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
-    int sizeGraph = addAirports("dataset/airports.csv");
-    Graph airportGraph = Graph(sizeGraph,true);
-    vector<vector<int>> adjacencyMatrix(sizeGraph, vector<int>(sizeGraph,0));
-    //read flights and add edge
-    //also create a map<code,int> that maps the airport code to the number of the node
+    queue<Airport> airports = getAirports("dataset/airports.csv");
+    int sizeGraph = airports.size();
+    Graph airportGraph = Graph(sizeGraph);
+    for(auto n : airportGraph.)
+
+    //read flights.csv and add edge
+    //also create a map<code,int> that maps the airport code to the number of the node nodes["cdg"] map<string,int>
     //because nodes[2] is the node numbered 2 but we cant do nodes["cdg"] because "cdg" is not an index
     //so to access a node using its code we need to map the codes to the position of the nodes in the vector nodes
     //.....

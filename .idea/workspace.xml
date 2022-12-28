@@ -21,11 +21,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b12c0037-4117-4b91-a6f1-acdeaba39a2c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graph.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/graph.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graph.h" beforeDir="false" afterPath="$PROJECT_DIR$/graph.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
-    <list id="7c159fdd-ec04-45a1-9e07-40ae71a52b2b" name="Changes by tomas" comment="" />
+    <list id="7c159fdd-ec04-45a1-9e07-40ae71a52b2b" name="Changes by tomas" comment="">
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,6 +40,17 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/main.cpp">
+      <ranges>
+        <range start1="8" end1="9" start2="8" end2="9" changelist="b12c0037-4117-4b91-a6f1-acdeaba39a2c" />
+        <range start1="15" end1="16" start2="15" end2="16" changelist="7c159fdd-ec04-45a1-9e07-40ae71a52b2b" />
+        <range start1="28" end1="29" start2="28" end2="29" changelist="7c159fdd-ec04-45a1-9e07-40ae71a52b2b" />
+        <range start1="32" end1="33" start2="32" end2="33" changelist="b12c0037-4117-4b91-a6f1-acdeaba39a2c" />
+        <range start1="37" end1="42" start2="37" end2="44" changelist="b12c0037-4117-4b91-a6f1-acdeaba39a2c" />
+      </ranges>
+    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -90,7 +104,7 @@
       <option name="presentableId" value="Default" />
       <updated>1672008952189</updated>
       <workItem from="1672008953877" duration="612000" />
-      <workItem from="1672186023844" duration="10150000" />
+      <workItem from="1672186023844" duration="14464000" />
     </task>
     <servers />
   </component>

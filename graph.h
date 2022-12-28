@@ -14,6 +14,7 @@
 #include <iostream>
 #include <unordered_map>
 #include "Airport.h"
+#include "Airline.h"
 
 using namespace std;
 
@@ -21,28 +22,30 @@ class Graph {
     struct Edge {
         int dest;   // Destination node
         //int distance;
-        list<string> airlines;
+        list<Airline> airlines;
     };
 
     struct Node {
         list<Edge> adj; // The list of outgoing edges (to adjacent nodes) nodes[i].adj
         bool visited;   // As the node been visited on a search?
         int distance;
-        string code; //map[nodes[1].code]
+        Airport airport;   //map[nodes[1].airport]
     };
 
     int n;// Graph size (vertices are numbered from 1 to n)
-    bool hasDir;        // false: undirected; true: directed
+          // false: undirected; true: directed
     vector<Node> nodes; // The list of nodes being represented
     unordered_map<string, Airport> airports;
     //unordered_map<string, int> codes;
 public:
     // Constructor: nr nodes and direction (default: undirected)
-    Graph(int nodes, bool dir = false);
+    Graph(int nodes);
 
-    void addEdge(int src, int dest, string airline);
+    void addEdge(int src, int dest, Airline airline);
 
-    void addAirlineToFlight(int src, int dest, string airline);
+    void addAirlineToFlight(int src, int dest, Airline airline);
+
+    unordered_map<string,int> addAirports(queue<Airport> airports);
 
     void dfs(int v);
 
