@@ -21,15 +21,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b12c0037-4117-4b91-a6f1-acdeaba39a2c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Airline.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Airline.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/graph.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph.h" beforeDir="false" afterPath="$PROJECT_DIR$/graph.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
-    <list id="7c159fdd-ec04-45a1-9e07-40ae71a52b2b" name="Changes by tomas" comment="">
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-    </list>
+    <list id="7c159fdd-ec04-45a1-9e07-40ae71a52b2b" name="Changes by tomas" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,14 +37,6 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/main.cpp">
-      <ranges>
-        <range start1="1" end1="1" start2="1" end2="33" changelist="7c159fdd-ec04-45a1-9e07-40ae71a52b2b" />
-        <range start1="4" end1="4" start2="36" end2="40" changelist="b12c0037-4117-4b91-a6f1-acdeaba39a2c" />
-      </ranges>
-    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -102,7 +90,7 @@
       <option name="presentableId" value="Default" />
       <updated>1672008952189</updated>
       <workItem from="1672008953877" duration="612000" />
-      <workItem from="1672186023844" duration="6509000" />
+      <workItem from="1672186023844" duration="10150000" />
     </task>
     <servers />
   </component>
