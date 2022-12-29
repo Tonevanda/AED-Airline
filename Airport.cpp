@@ -33,10 +33,10 @@ string Airport::getCountry() {
     return country;
 }
 
-float Airport::getLatitude() {
+float Airport::getLatitude() const {
     return latitude;
 }
 
-float Airport::getLongitude() {
+float Airport::getLongitude() const {
     return longitude;
 }
