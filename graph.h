@@ -26,30 +26,37 @@ class Graph {
     };
 
     struct Node {
-        list<Edge> adj; // The list of outgoing edges (to adjacent nodes) nodes[i].adj
+        list<Edge> flights; // The list of outgoing edges (to adjacent nodes)
         bool visited;   // As the node been visited on a search?
         int distance;
-        Airport airport;   //map[nodes[1].airport]
+        Airport airport;
+        list<vector<int>> path;
     };
 
-    int n;// Graph size (vertices are numbered from 1 to n)
-          // false: undirected; true: directed
+    int n; //number of nodes
     vector<Node> nodes; // The list of nodes being represented
-    unordered_map<string, Airport> airports;
-    //unordered_map<string, int> codes;
+    unordered_map<string,int> airportIndex; //maps the airport codes to the index of the airport(node) in the vector nodes
+    unordered_map<string,Airline> airlines; //maps the airline codes to the airlines
+
 public:
     // Constructor: nr nodes and direction (default: undirected)
     Graph(int nodes);
 
     void addEdge(int src, int dest, Airline airline);
 
-    void addAirlineToFlight(int src, int dest, Airline airline);
+    void addAirports(queue<Airport> airports);
 
-    unordered_map<string,int> addAirports(queue<Airport> airports);
+    unordered_map<string,int> getAirports();
+
+    void getAirlines(string file);
+
+    void getFlights(string file);
 
     void dfs(int v);
 
     void bfs(int v);
+
+    void printpath();
 };
 
 #endif

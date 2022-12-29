@@ -3,6 +3,9 @@
 //
 
 #include "Airline.h"
+Airline::Airline(){
+    NULL;
+}
 
 Airline::Airline(string code, string name, string callsign, string country) {
     this->code=code;

@@ -38,7 +38,12 @@ int main() {
     queue<Airport> airports = getAirports("dataset/airports.csv");
     int sizeGraph = airports.size();
     Graph airportGraph = Graph(sizeGraph);
-    for(auto n : airportGraph.)
+    airportGraph.addAirports(airports);
+    airportGraph.getAirlines("dataset/airlines.csv");
+    airportGraph.getFlights("dataset/flights.csv");
+    airportGraph.bfs(airportGraph.getAirports()["DXB"]);
+    airportGraph.printpath();
+    //for(auto n : airportGraph.)
 
     //read flights.csv and add edge
     //also create a map<code,int> that maps the airport code to the number of the node nodes["cdg"] map<string,int>
