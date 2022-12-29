@@ -44,7 +44,7 @@ int main() {
     //airportGraph.bfs(1);
     //airportGraph.printpath("LGA");
     //cout<<airportGraph.getAirports()["DFA"];
-    airportGraph.getShortestPath("CDG","JFK");
+    airportGraph.getShortestPath("CDG","LGA");
     //for(auto n : airportGraph.)
 
     //read flights.csv and add edge

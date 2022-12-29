@@ -22,7 +22,7 @@ class Graph {
     struct Edge {
         int dest;   // Destination node
         //int distance;
-        list<Airline> airlines;
+        vector<Airline> airlines;
     };
 
     struct Node {
@@ -30,7 +30,8 @@ class Graph {
         bool visited;   // As the node been visited on a search?
         int distance;
         Airport airport;
-        list<vector<int>> path;
+        vector<vector<int>> path;
+        vector<vector<Airline>> pathAirlines;
     };
 
     int n; //number of nodes
