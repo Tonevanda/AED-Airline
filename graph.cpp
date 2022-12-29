@@ -122,7 +122,7 @@ void Graph::bfs(int v) {
     }
 }
 
-void Graph::printpath(){
+void Graph::printPath(){
     int counter=1;
     for(auto it:nodes[airportIndex["IST"]].path){
         cout<<"shortest path"<<counter<<":";

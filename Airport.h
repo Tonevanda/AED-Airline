@@ -25,8 +25,8 @@ public:
     string getName();
     string getCity();
     string getCountry();
-    float getLatitude();
-    float getLongitude();
+    float getLatitude() const;
+    float getLongitude() const;
 };
 
 

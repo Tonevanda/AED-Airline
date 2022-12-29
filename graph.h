@@ -56,7 +56,7 @@ public:
 
     void bfs(int v);
 
-    void printpath();
+    void printPath();
 };
 
 #endif
