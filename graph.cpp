@@ -25,6 +25,7 @@ void Graph::addAirports(queue<Airport> airports){
         index.insert({airports.front().getCode(),count});
         airports.pop();
         count++;
+
     }
     airportIndex=index;
 }
@@ -122,14 +123,64 @@ void Graph::bfs(int v) {
     }
 }
 
-void Graph::printpath(){
+void Graph::printPath(string end){
     int counter=1;
-    for(auto it:nodes[airportIndex["IST"]].path){
-        cout<<"shortest path"<<counter<<":";
+    for(auto it:nodes[airportIndex[end]].path){
+        cout<<"shortest path"<<counter<<": ";
+        int tempc=1;
         for(auto temp:it){
-            cout<<" -> "<<nodes[temp].airport.getName();
+            if(tempc==it.size()){
+                cout<<nodes[temp].airport.getName();
+            }
+            else{
+                cout<<nodes[temp].airport.getName()<<" -> ";
+            }
+            tempc++;
         }
         cout<<"\n";
         counter++;
     }
+}
+
+void Graph::getShortestPath(string start,string end){
+    cout<<airportIndex[start];
+    int v=airportIndex[start];
+    int finalpos=INT_MAX;
+    for (int i=1; i<=n; i++) {
+        nodes[i].visited = false;
+        nodes[i].distance = -1;
+    }
+    queue<int> q; // queue of unvisited nodes
+    q.push(v);
+    nodes[v].distance = 0;
+    nodes[v].visited = true;
+    nodes[v].path.clear();
+    nodes[v].path.push_back({v});
+    while (!q.empty()) { // while there are still unvisited nodes
+        int u = q.front(); q.pop();
+        //cout<<nodes[u].distance<<" ";
+        //cout<<"FINAL:"<<finalpos<<" ";
+        if(nodes[u].distance==finalpos){
+            break;
+        }
+        for (auto e : nodes[u].flights) {
+            int w = e.dest;
+            //cout<<"W:"<<w<<";"<<"end:"<<airportIndex[end]<<"\n";
+            if(w==airportIndex[end]){
+                finalpos=nodes[u].distance + 1;
+                //cout<<finalpos;
+            }
+            if (!nodes[w].visited || nodes[w].distance==nodes[u].distance + 1) {
+                q.push(w);
+                nodes[w].visited = true;
+                nodes[w].distance = nodes[u].distance + 1;
+                for(auto it:nodes[u].path){
+                    vector<int>temp=it;
+                    temp.push_back(w);
+                    nodes[w].path.push_back(temp);
+                }
+            }
+        }
+    }
+    printPath(end);
 }

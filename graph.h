@@ -56,7 +56,9 @@ public:
 
     void bfs(int v);
 
-    void printpath();
+    void printPath(string end);
+
+    void getShortestPath(string start,string end);
 };
 
 #endif
