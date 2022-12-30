@@ -40,9 +40,25 @@ int main() {
     airportGraph.addAirports(airports);
     airportGraph.getAirlines("dataset/airlines.csv");
     airportGraph.getFlights("dataset/flights.csv");
-    //airportGraph.getShortestPath("CDG","LGA");
-    airportGraph.getAvailableFlights("CDG");
+    //airportGraph.showCityAirports("Paris");
+
+    airportGraph.getShortestPath("CDG","LGA");
+
+    //airportGraph.getAvailableFlights("CDG");
+
     //airportGraph.getDestinations("CDG");
+
+    //set<string> permittedAirlines;
+
+    //permittedAirlines.insert("AFR");
+    //permittedAirlines.insert("DAL");
+
+    //airportGraph.getShortestFilteredPath("CDG","LGA",permittedAirlines);
+
+    //airportGraph.getCloseAirports(49.012779,2.550000,1000);
+
+    //airportGraph.getStats("CDG",3);
+
     cout << "Got here";
     return 0;
 }

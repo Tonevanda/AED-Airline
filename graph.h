@@ -15,6 +15,7 @@
 #include <unordered_map>
 #include "Airport.h"
 #include "Airline.h"
+#include <set>
 
 using namespace std;
 
@@ -38,34 +39,25 @@ class Graph {
     vector<Node> nodes; // The list of nodes being represented
     unordered_map<string,int> airportIndex; //maps the airport codes to the index of the airport(node) in the vector nodes
     unordered_map<string,Airline> airlineCodes; //maps the airline codes to the airlines
-
+    unordered_map<string,vector<Airport>> cityAirports;
 public:
-    // Constructor: nr nodes and direction (default: undirected)
     Graph(int nodes);
-
     void addEdge(int src, int dest, const Airline& airline);
-
     void addAirports(queue<Airport> airports);
-
+    void addCityAirports();
+    void showCityAirports(string city);
     unordered_map<string,int> getAirports();
-
     void getAirlines(string file);
-
     void getFlights(string file);
-
-    double calculateDistanceBetween(const Airport& airport1, const Airport& airport2);
-
     void dfs(int v);
-
     void bfs(int v);
-
     void printPath(const string& end);
-
     void getShortestPath(const string& start,const string& end);
-
     void getAvailableFlights(const string& airport);
-
     void getDestinations(const string& airport);
+    void getShortestFilteredPath(const string& start,const string& end,set<string> permittedAirlines);
+    void getCloseAirports(double latitude, double longitude, int kilometers);
+    void getStats(const string& start,int nFlights);
 };
 
 #endif

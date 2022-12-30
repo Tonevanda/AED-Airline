@@ -29,6 +29,31 @@ void Graph::addAirports(queue<Airport> airports){
     airportIndex=index;
 }
 
+void Graph::addCityAirports(){
+    unordered_map<string,vector<Airport>> temp;
+    for(int i = 1; i<=n;i++){
+        if(temp.find(nodes[i].airport.getCity()) == temp.end()){
+            vector<Airport> airports;
+            airports.push_back(nodes[i].airport);
+            temp.insert({nodes[i].airport.getCity(),airports});
+        }
+        else{
+            temp[nodes[i].airport.getCity()].push_back(nodes[i].airport);
+        }
+    }
+    cityAirports = temp;
+}
+
+void Graph::showCityAirports(string city){
+    addCityAirports();
+    for(Airport airport : cityAirports[city]){
+        cout << airport.getCode() << ", " << airport.getName() << ", " << airport.getCity() << ", ";
+    }
+    cout << endl;
+
+}
+
+
 unordered_map<string,int> Graph::getAirports(){return airportIndex;}
 
 void Graph::getAirlines(string file){
@@ -81,25 +106,6 @@ void Graph::getFlights(string file){
     fout.close();
 }
 
-double Graph::calculateDistanceBetween(const Airport& airport1, const Airport& airport2){
-
-    double latitude1 = airport1.getLatitude();
-    double latitude2 = airport2.getLatitude();
-    double longitude1 = airport1.getLongitude();
-    double longitude2 = airport2.getLongitude();
-
-    double dLat = (latitude2-latitude1)* M_PI / 180.0;
-    double dLon = (longitude2-longitude1)* M_PI / 180.0;
-
-    latitude1 = (latitude1) * M_PI / 180.0;
-    latitude2 = (latitude2) * M_PI / 180.0;
-
-    double a = pow(sin(dLat/2),2)+ pow(sin(dLon/2),2)* cos(latitude1)* cos(latitude2);
-    double rad = 6371;
-    double c = 2 * asin(sqrt(a));
-    return rad * c;
-}
-
 // Depth-First Search: example implementation
 void Graph::dfs(int v) {
     nodes[v].visited = true;
@@ -142,10 +148,81 @@ void Graph::bfs(int v) {
     }
 }
 
-
+void Graph::getStats(const string& start,int finalpos){
+    int v=airportIndex[start];
+    for (int i=1; i<=n; i++) {
+        nodes[i].visited = false;
+        nodes[i].distance = -1;
+    }
+    queue<int> q; // queue of unvisited nodes
+    set<int> availableAirports;
+    set<string> availableCities;
+    set<string> availableCountries;
+    q.push(v);
+    nodes[v].distance = 0;
+    nodes[v].visited = true;
+    nodes[v].path.clear();
+    nodes[v].path.push_back({v});
+    availableAirports.insert(v);
+    availableCities.insert(nodes[v].airport.getCity());
+    availableCountries.insert(nodes[v].airport.getCountry());
+    while (!q.empty()) { // while there are still unvisited nodes
+        int current = q.front(); q.pop();
+        if(nodes[current].distance==finalpos){break;}
+        for (const auto& flight : nodes[current].flights) {
+            int nextNode = flight.dest;
+            if (!nodes[nextNode].visited || nodes[nextNode].distance==nodes[current].distance + 1) {
+                q.push(nextNode);
+                nodes[nextNode].visited = true;
+                nodes[nextNode].distance = nodes[current].distance + 1;
+                availableAirports.insert(nextNode);
+                availableCities.insert(nodes[nextNode].airport.getCity());
+                availableCountries.insert(nodes[nextNode].airport.getCountry());
+                for(const auto& airline: flight.airlines){      //iterate over every airline in an edge(flight)
+                    for(const auto& pathIt:nodes[current].path){   //iterate over every path(vector with nodes) and add itself
+                        vector<int>temp=pathIt;             //to the end of every path
+                        temp.push_back(nextNode);
+                        nodes[nextNode].path.push_back(temp);
+                    }
+                    if(nodes[current].pathAirlines.empty()){  //if the vector of vector of airlines is empty
+                        vector<Airline>temp2;                 //creates an empty vector, adds itself to it and adds that
+                        temp2.push_back(airline);             //vector to the list of pathAirlines
+                        nodes[nextNode].pathAirlines.push_back(temp2);
+                    }
+                    else{
+                        for(const auto& airlines:nodes[current].pathAirlines){ //iterate over every path of airlines in the vector pathAirlines
+                            vector<Airline>temp2=airlines;              //create vector equal to the vector of airlines and adds itself to it
+                            temp2.push_back(airline);                   //then adds that vector to the list of pathAirlines
+                            nodes[nextNode].pathAirlines.push_back(temp2);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    //print: n1:airport in city,country (repeated)
+    //print: n2:city in country         (repeated)
+    //print: n3:country                 (repeated)
+    //print n1 airports,n2 cities and n3 country
+    int n1=1;
+    for(auto it: availableAirports){
+        cout<<n1<<": "<<nodes[it].airport.getCode()<<", "<<nodes[it].airport.getCode()<<", "<<nodes[it].airport.getCity()<<", "<<nodes[it].airport.getCountry()<<endl;
+        n1++;
+    }
+    int n2=1;
+    for(auto it: availableCities){
+        cout<<n2<<": "<<it<<endl;
+        n2++;
+    }
+    int n3=1;
+    for(auto it: availableCountries){
+        cout<<n3<<": "<<it<<endl;
+        n3++;
+    }
+    cout<<"Total: "<<n1<<" Airports, "<<n2<<" Cities, "<<n3<<" Countries"<<endl;
+}
 
 void Graph::getShortestPath(const string& start,const string& end){
-    cout<<airportIndex[start];
     int v=airportIndex[start];
     int finalpos=INT_MAX;
     for (int i=1; i<=n; i++) {
@@ -192,6 +269,60 @@ void Graph::getShortestPath(const string& start,const string& end){
     }
     printPath(end);
 }
+
+void Graph::getShortestFilteredPath(const string& start,const string& end,const set<string> permittedAirlines){
+    int v=airportIndex[start];
+    int finalpos=INT_MAX;
+    for (int i=1; i<=n; i++) {
+        nodes[i].visited = false;
+        nodes[i].distance = -1;
+    }
+    queue<int> q; // queue of unvisited nodes
+    q.push(v);
+    nodes[v].distance = 0;
+    nodes[v].visited = true;
+    nodes[v].path.clear();
+    nodes[v].path.push_back({v});
+    while (!q.empty()) { // while there are still unvisited nodes
+        int current = q.front(); q.pop();
+        if(nodes[current].distance==finalpos){break;}
+        for (const auto& flight : nodes[current].flights) {
+            int nextNode = flight.dest;
+            if(nextNode==airportIndex[end]){finalpos=nodes[current].distance + 1;}
+            if ((!nodes[nextNode].visited || nodes[nextNode].distance==nodes[current].distance + 1)) {
+                bool hasValidAirline=false;
+                for(const auto& airline: flight.airlines){      //iterate over every airline in an edge(flight)
+                    if(permittedAirlines.find(airline.getCode()) != permittedAirlines.end()) {
+                        hasValidAirline=true;
+                        for (const auto &pathIt: nodes[current].path) {   //iterate over every path(vector with nodes) and add itself
+                            vector<int> temp = pathIt;             //to the end of every path
+                            temp.push_back(nextNode);
+                            nodes[nextNode].path.push_back(temp);
+                        }
+                        if (nodes[current].pathAirlines.empty()) {  //if the vector of vector of airlines is empty
+                            vector<Airline> temp2;                 //creates an empty vector, adds itself to it and adds that
+                            temp2.push_back(airline);             //vector to the list of pathAirlines
+                            nodes[nextNode].pathAirlines.push_back(temp2);
+                        } else {
+                            for (const auto &airlines: nodes[current].pathAirlines) { //iterate over every path of airlines in the vector pathAirlines
+                                vector<Airline> temp2 = airlines;              //create vector equal to the vector of airlines and adds itself to it
+                                temp2.push_back(airline);                   //then adds that vector to the list of pathAirlines
+                                nodes[nextNode].pathAirlines.push_back(temp2);
+                            }
+                        }
+                    }
+                }
+                if(hasValidAirline){
+                    q.push(nextNode);
+                    nodes[nextNode].visited = true;
+                    nodes[nextNode].distance = nodes[current].distance + 1;
+                }
+            }
+        }
+    }
+    printPath(end);
+}
+
 void Graph::getAvailableFlights(const string& airport){
     int count = 1;
     set<string> airlineCount;
@@ -214,13 +345,22 @@ void Graph::getDestinations(const string& airport){
     }
 }
 
+void Graph::getCloseAirports(double latitude, double longitude, int kilometers) {
+    int countAirport = 1;
+    for(int i = 1; i<=n;i++){
+        if(nodes[i].airport.isBetween(latitude, longitude, kilometers)){
+            cout <<  countAirport << ": " << nodes[i].airport.getCode() << " | " << nodes[i].airport.getName() << " | " << nodes[i].airport.getCity() << ", " << nodes[i].airport.getCountry() <<endl;
+            countAirport++;
+        }
+    }
+}
+
 void Graph::printPath(const string& end) {
     int counter = 1;
     for(int i=0;i<nodes[airportIndex[end]].path.size();i++){
         cout << "Shortest Path " << counter << ": ";
         int index=0;
-        while(index<nodes[airportIndex[end]].path[i].size()-1)
-        {
+        while(index<nodes[airportIndex[end]].path[i].size()-1){
             if(index==nodes[airportIndex[end]].path[i].size()-2){
                 cout <<"using "<< nodes[airportIndex[end]].pathAirlines[i][index].getCode()<<" airlines to go from "<<nodes[nodes[airportIndex[end]].path[i][index]].airport.getCode() << " to "<<nodes[nodes[airportIndex[end]].path[i][++index]].airport.getCode();
             }

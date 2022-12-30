@@ -18,10 +18,10 @@ private:
 public:
     Airline();
     Airline(string code, string name, string callSign, string country);
-    string getCode();
-    string getName();
-    string getCallSign();
-    string getCountry();
+    string getCode()const;
+    string getName()const;
+    string getCallSign()const;
+    string getCountry()const;
 };
 
 

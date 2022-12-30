@@ -16,18 +16,18 @@ Airline::Airline(string code, string name, string callsign, string country) {
     this->country=std::move(country);
 }
 
-string Airline::getCode() {
+string Airline::getCode() const{
     return code;
 }
 
-string Airline::getName() {
+string Airline::getName()const {
     return name;
 }
 
-string Airline::getCallSign() {
+string Airline::getCallSign() const{
     return callSign;
 }
 
-string Airline::getCountry() {
+string Airline::getCountry()const {
     return country;
 }

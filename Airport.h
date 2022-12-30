@@ -6,7 +6,7 @@
 #define PROJETO_AED_2_AIRPORT_H
 
 #include <string>
-
+#include <cmath>
 
 using namespace std;
 
@@ -27,6 +27,8 @@ public:
     string getCountry();
     double getLatitude() const;
     double getLongitude() const;
+    double distanceTo(double latitude, double longitude) const;
+    bool isBetween(double latitude, double longitude, int kilometers) const;
 };
 
 
