@@ -37,13 +37,13 @@ class Graph {
     int n; //number of nodes
     vector<Node> nodes; // The list of nodes being represented
     unordered_map<string,int> airportIndex; //maps the airport codes to the index of the airport(node) in the vector nodes
-    unordered_map<string,Airline> airlines; //maps the airline codes to the airlines
+    unordered_map<string,Airline> airlineCodes; //maps the airline codes to the airlines
 
 public:
     // Constructor: nr nodes and direction (default: undirected)
     Graph(int nodes);
 
-    void addEdge(int src, int dest, Airline airline);
+    void addEdge(int src, int dest, const Airline& airline);
 
     void addAirports(queue<Airport> airports);
 
@@ -53,13 +53,19 @@ public:
 
     void getFlights(string file);
 
+    double calculateDistanceBetween(const Airport& airport1, const Airport& airport2);
+
     void dfs(int v);
 
     void bfs(int v);
 
-    void printPath(string end);
+    void printPath(const string& end);
 
-    void getShortestPath(string start,string end);
+    void getShortestPath(const string& start,const string& end);
+
+    void getAvailableFlights(const string& airport);
+
+    void getDestinations(const string& airport);
 };
 
 #endif

@@ -13,14 +13,14 @@ class Airline {
 private:
     string code;
     string name;
-    string callsign;
+    string callSign;
     string country;
 public:
     Airline();
-    Airline(string code, string name, string callsign, string country);
+    Airline(string code, string name, string callSign, string country);
     string getCode();
     string getName();
-    string getCallsign();
+    string getCallSign();
     string getCountry();
 };
 

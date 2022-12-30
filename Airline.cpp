@@ -3,15 +3,17 @@
 //
 
 #include "Airline.h"
+
+#include <utility>
 Airline::Airline(){
     NULL;
 }
 
 Airline::Airline(string code, string name, string callsign, string country) {
-    this->code=code;
-    this->name=name;
-    this->callsign=callsign;
-    this->country=country;
+    this->code=std::move(code);
+    this->name=std::move(name);
+    this->callSign=std::move(callsign);
+    this->country=std::move(country);
 }
 
 string Airline::getCode() {
@@ -22,8 +24,8 @@ string Airline::getName() {
     return name;
 }
 
-string Airline::getCallsign() {
-    return callsign;
+string Airline::getCallSign() {
+    return callSign;
 }
 
 string Airline::getCountry() {

@@ -16,17 +16,17 @@ private:
     string name;
     string city;
     string country;
-    float latitude;
-    float longitude;
+    double latitude;
+    double longitude;
 public:
     Airport();
-    Airport(string code, string name, string city, string country, float latitude, float longitude);
+    Airport(string code, string name, string city, string country, double latitude, double longitude);
     string getCode();
     string getName();
     string getCity();
     string getCountry();
-    float getLatitude() const;
-    float getLongitude() const;
+    double getLatitude() const;
+    double getLongitude() const;
 };
 
 

@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <iostream>
 #include <fstream>
 #include <sstream>
 #include "graph.h"
@@ -23,8 +22,8 @@ queue<Airport> getAirports(string file){
         getline(it_stream,airportLatitude,',');
         getline(it_stream,airportLongitude,'\r');
 
-        float latitude = stof(airportLatitude);
-        float longitude = stof(airportLongitude);
+        double latitude = stod(airportLatitude);
+        double longitude = stod(airportLongitude);
         Airport airport = Airport(airportCode,airportName,airportCity,airportCountry,latitude,longitude);
         airports.push(airport);
     }
@@ -41,20 +40,21 @@ int main() {
     airportGraph.addAirports(airports);
     airportGraph.getAirlines("dataset/airlines.csv");
     airportGraph.getFlights("dataset/flights.csv");
-    //airportGraph.bfs(1);
-    //airportGraph.printpath("LGA");
-    //cout<<airportGraph.getAirports()["DFA"];
-    airportGraph.getShortestPath("CDG","LGA");
-    //for(auto n : airportGraph.)
-
-    //read flights.csv and add edge
-    //also create a map<code,int> that maps the airport code to the number of the node nodes["cdg"] map<string,int>
-    //because nodes[2] is the node numbered 2 but we cant do nodes["cdg"] because "cdg" is not an index
-    //so to access a node using its code we need to map the codes to the position of the nodes in the vector nodes
-    //.....
-    //check in the adjacency matrix if the edge already exists, for example:
-    // if airport 1 goes to airport 2 check if adjacencyMatrix[1][2] is 1
-    //if it is then call addAirlineToFlight(1,2,nameoftheairline) otherwise just call addEdge like usual
+    //airportGraph.getShortestPath("CDG","LGA");
+    airportGraph.getAvailableFlights("CDG");
+    //airportGraph.getDestinations("CDG");
     cout << "Got here";
     return 0;
 }
+
+
+/*
+ * FAZER A CENA DOS PAISES E CIDADES
+ * MENU
+ *
+ * EXTRA:
+ * De quantos países diferentes?
+ * Quantos aeroportos, cidades ou países são atingíveis usando um máximo de Y voos?
+ *
+ *
+ */

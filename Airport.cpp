@@ -4,15 +4,17 @@
 
 #include "Airport.h"
 
+#include <utility>
+
 Airport::Airport() {
     NULL;
 }
 
-Airport::Airport(string code, string name, string city, string country, float latitude, float longitude) {
-    this->code=code;
-    this->name=name;
-    this->city=city;
-    this->country=country;
+Airport::Airport(string code, string name, string city, string country, double latitude, double longitude) {
+    this->code=std::move(code);
+    this->name=std::move(name);
+    this->city=std::move(city);
+    this->country=std::move(country);
     this->latitude=latitude;
     this->longitude=longitude;
 }
@@ -33,10 +35,10 @@ string Airport::getCountry() {
     return country;
 }
 
-float Airport::getLatitude() const {
+double Airport::getLatitude() const {
     return latitude;
 }
 
-float Airport::getLongitude() const {
+double Airport::getLongitude() const {
     return longitude;
 }
