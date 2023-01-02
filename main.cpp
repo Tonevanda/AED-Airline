@@ -32,6 +32,46 @@ queue<Airport> getAirports(string file){
     return airports;
 }
 
+void menuLocal() {
+    bool canRun = true;
+    int n;
+    while (canRun) {
+        int input;
+        cout << "From where?: \n"
+                "1: Airport\n"
+                "2: City\n"
+                "3: coordinates\n"
+                "0: Return\n";
+        while (!(cin >> input)) {
+            cout << "Invalid input!\n\n";
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            cout << "From where?: \n"
+                    "1: Airport\n"
+                    "2: City\n"
+                    "3: coordinates\n"
+                    "0: Return\n";
+        }
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+        switch (input) {
+            case 0:
+                canRun = false;
+                break;
+            case 1:
+                cout << "Input Airport Code:\n";
+                while (!(cin >> input)) {
+                    cout << "Invalid input!\n\n";
+                    cin.clear();
+                    cin.ignore(INT_MAX, '\n');
+                    cout << "Input Airport Code:\n";
+                }
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+        }
+    }
+}
+
 int main() {
     std::cout << "Hello, World!" << std::endl;
     queue<Airport> airports = getAirports("dataset/airports.csv");
