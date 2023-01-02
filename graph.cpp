@@ -44,17 +44,19 @@ void Graph::addCityAirports(){
     cityAirports = temp;
 }
 
-void Graph::showCityAirports(string city){
-    addCityAirports();
+
+void Graph::showCityAirports(const string& city){
     for(Airport airport : cityAirports[city]){
         cout << airport.getCode() << ", " << airport.getName() << ", " << airport.getCity() << ", ";
     }
     cout << endl;
-
 }
 
 
+
 unordered_map<string,int> Graph::getAirports(){return airportIndex;}
+
+unordered_map<string,Airline> Graph::getAirlineCodes() { return airlineCodes;}
 
 void Graph::getAirlines(string file){
     cout<<"Reading Airlines file...\n";
@@ -78,7 +80,7 @@ void Graph::getAirlines(string file){
     airlineCodes=index;
     fout.close();
 }
-void Graph::getFlights(string file){
+int Graph::getFlights(string file){
     cout<<"Reading flights file...\n";
     ifstream fout;
     file="../"+file;
@@ -86,6 +88,7 @@ void Graph::getFlights(string file){
     string tempstream,source,target,airline;
     getline (fout, tempstream);
     queue<Airport> airports;
+    int counter=0;
     while (getline (fout, tempstream)) {
         stringstream it_stream(tempstream);
         getline(it_stream,source,',');
@@ -100,13 +103,61 @@ void Graph::getFlights(string file){
             }
         }
         if(!found)addEdge(airportIndex[source], airportIndex[target], airlineCodes[airline]);
-
+        counter++;
     }
     cout << "Finished reading.\n";
     fout.close();
+    return counter;
 }
 
-// Depth-First Search: example implementation
+void Graph::articulationPoints() {
+    list<int> answer;
+    for (Node& node : nodes) {
+        node.visited = false;
+        node.inStack = false;
+        node.isArt = false;
+    }
+    stack<int> node_stack;
+    for (int i = 1; i < nodes.size(); i++) {
+        if (!nodes[i].visited)
+            dfs_art(i, &node_stack, &answer, 1);
+    }
+    cout << "There are "<< answer.size() << " articulation points.\n";
+}
+
+void Graph::dfs_art(int v, stack<int>* node_stack, list<int>* res, int index) {
+    nodes[v].visited = true;
+    nodes[v].low = index;
+    nodes[v].num = index;
+    index++;
+    nodes[v].inStack = true;
+    node_stack->push(v);
+
+    int count = 0;
+    for (const auto& e : nodes[v].flights) {
+        int w = e.dest;
+        if (!nodes[w].visited) {
+            count++;
+            dfs_art(w, node_stack, res, index);
+            nodes[v].low = min(nodes[v].low, nodes[w].low);
+        }
+        else if (nodes[w].inStack) {
+            nodes[v].low = min(nodes[v].low, nodes[w].num);
+        }
+
+        if (nodes[v].num != 1 && !nodes[v].isArt && nodes[w].low >= nodes[v].num) {
+            res->push_back(v);
+            nodes[v].isArt = true;
+        }
+        else if (!nodes[v].isArt && nodes[v].num == 1 && count > 1) {
+            res->push_back(v);
+            nodes[v].isArt = true;
+        }
+    }
+    res->sort();
+}
+
+/*
 void Graph::dfs(int v) {
     nodes[v].visited = true;
     for (const auto& e : nodes[v].flights) {
@@ -115,7 +166,7 @@ void Graph::dfs(int v) {
             dfs(w);
     }
 }
-
+*/
 // Breadth-First Search: example implementation
 
 void Graph::bfs(int v) {
@@ -210,12 +261,12 @@ void Graph::getStats(const string& start,int finalpos){
         n1++;
     }
     int n2=1;
-    for(auto it: availableCities){
+    for(const auto& it: availableCities){
         cout<<n2<<": "<<it<<endl;
         n2++;
     }
     int n3=1;
-    for(auto it: availableCountries){
+    for(const auto& it: availableCountries){
         cout<<n3<<": "<<it<<endl;
         n3++;
     }
@@ -270,7 +321,7 @@ void Graph::getShortestPath(const string& start,const string& end){
     printPath(end);
 }
 
-void Graph::getShortestFilteredPath(const string& start,const string& end,const set<string> permittedAirlines){
+void Graph::getShortestFilteredPath(const string& start,const string& end,const set<string>& permittedAirlines){
     int v=airportIndex[start];
     int finalpos=INT_MAX;
     for (int i=1; i<=n; i++) {
@@ -327,7 +378,7 @@ void Graph::getAvailableFlights(const string& airport){
     int count = 1;
     set<string> airlineCount;
     for(const auto& destination : nodes[airportIndex[airport]].flights){
-        for(auto airline : destination.airlines) {
+        for(const auto& airline : destination.airlines) {
             airlineCount.insert(airline.getCode());
             cout << count << ": using " << airline.getCode() << " airlines to go to " << nodes[destination.dest].airport.getCode()<<endl;
             count++;

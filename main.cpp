@@ -32,16 +32,65 @@ queue<Airport> getAirports(string file){
     return airports;
 }
 
-void menuLocal(const Graph& airportGraph) {
+
+void menu(Graph& airportGraph,int nflights) {
     bool canRun = true;
     int n;
+    set<string> permitedAirlines;
     while (canRun) {
+        int input;
+        cout << "Do you wish to specify airlines?\n"
+                "1:Yes\n"
+                "0:No";
+        while (!(cin >> input)) {
+            cout << "Invalid input!\n\n";
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            cout << "Do you wish to specify airlines?\n"
+                    "1:Yes"
+                    "0:No";
+        }
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+
+        switch (input) {
+            case 0:{
+                string code;
+                Airline airline;
+                for(auto const & [code,airline]:airportGraph.getAirlineCodes()){
+                    permitedAirlines.insert(code);
+                }
+                canRun = false;
+                break;
+            }
+            case 1: {
+                bool inputing = true;
+                while (inputing) {
+                    string inputAirline;
+                    cout << "input the airline code\n";
+                    while (!(cin >> input)) {
+                        cout << "Invalid input!\n\n";
+                        cin.clear();
+                        cin.ignore(INT_MAX, '\n');
+                        cout << "input the airline code\n";
+                    }
+                    cin.clear();
+                    cin.ignore(INT_MAX, '\n');
+                    permitedAirlines.insert(inputAirline);
+                    inputing = false;
+                }
+                break;
+            }
+        }
+    }
+    bool canRun1 = true;
+    while (canRun1) {
         int input;
         cout << "Choose a starting point. \n"
                 "1: Airport\n"
                 "2: City\n"
                 "3: Coordinates\n"
-                "0: Return\n";
+                "0: End Program\n";
         while (!(cin >> input)) {
             cout << "Invalid input!\n\n";
             cin.clear();
@@ -50,17 +99,18 @@ void menuLocal(const Graph& airportGraph) {
                     "1: Airport\n"
                     "2: City\n"
                     "3: Coordinates\n"
-                    "0: Return\n";
+                    "0: End Program\n";
         }
         cin.clear();
         cin.ignore(INT_MAX, '\n');
         switch (input) {
             case 0:
-                canRun = false;
+                canRun1 = false;
                 break;
-            case 1:
+            case 1: {
+                string start;
                 cout << "Input Airport Code:\n";
-                while (!(cin >> input)) {
+                while (!(cin >> start)) {
                     cout << "Invalid input!\n\n";
                     cin.clear();
                     cin.ignore(INT_MAX, '\n');
@@ -68,12 +118,63 @@ void menuLocal(const Graph& airportGraph) {
                 }
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
-                cout << "Choose a course of action.\n"
-                        "1: Shortest path to another airport\n"
-                        "2: Check information"
+                bool canRun2 = true;
+                while (canRun2) {
+                    cout << "Choose a course of action.\n"
+                            "1: Shortest path to another airport\n"
+                            "2: Check information\n"
+                            "0: Other starting point";
+                    while (!(cin >> input)) {
+                        cout << "Invalid input!\n\n";
+                        cin.clear();
+                        cin.ignore(INT_MAX, '\n');
+                        cout << "Choose a course of action.\n"
+                                "1: Shortest path to another airport\n"
+                                "2: Check information\n"
+                                "0: Other starting point";
+                    }
+                    cin.clear();
+                    cin.ignore(INT_MAX, '\n');
+                    string end;
+                    switch (input) {
+                        case 0:
+                            canRun2 = false;
+                            break;
+                        case 1:
+                            cout << "Input Second Airport Code:\n";
+                            while (!(cin >> end)) {
+                                cout << "Invalid input!\n\n";
+                                cin.clear();
+                                cin.ignore(INT_MAX, '\n');
+                                cout << "Input Second Airport Code:\n";
+                            }
+                            cin.clear();
+                            cin.ignore(INT_MAX, '\n');
+                            airportGraph.getShortestFilteredPath(start, end, permitedAirlines);
+                            break;
+                        case 2:
+                            airportGraph.getAvailableFlights(start);
+                            airportGraph.getDestinations(start);
+                            break;
+                    }
+                }
+            }
+            case 2:{
+                string start;
+                cout << "Input City Name:\n";
+                while (!(cin >> start)) {
+                    cout << "Invalid input!\n\n";
+                    cin.clear();
+                    cin.ignore(INT_MAX, '\n');
+                    cout << "Input City Name:\n";
+                }
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
         }
     }
 }
+
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
@@ -82,8 +183,11 @@ int main() {
     Graph airportGraph = Graph(sizeGraph);
     airportGraph.addAirports(airports);
     airportGraph.getAirlines("dataset/airlines.csv");
-    airportGraph.getFlights("dataset/flights.csv");
-    menuLocal(airportGraph);
+    int nflights = airportGraph.getFlights("dataset/flights.csv");
+    //cout << nflights;
+    airportGraph.addCityAirports();
+    menu(airportGraph,nflights);
+
     //airportGraph.showCityAirports("Paris");
 
     //airportGraph.getShortestPath("CDG","LGA");
@@ -103,6 +207,8 @@ int main() {
 
     //airportGraph.getStats("CDG",3);
 
+    //airportGraph.articulationPoints();
+
     cout << "Got here";
     return 0;
 }
@@ -111,6 +217,9 @@ int main() {
 /*
  * FAZER A CENA DOS PAISES E CIDADES
  * MENU
+ *
+ * n airoportos:graph.n,n airlines:airline codes.size,n voos
+ * diametro do grafo
  *
  * EXTRA:
  * De quantos países diferentes?

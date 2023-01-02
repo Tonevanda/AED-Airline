@@ -12,6 +12,7 @@
 #include <vector>
 #include <queue>
 #include <iostream>
+#include <stack>
 #include <unordered_map>
 #include "Airport.h"
 #include "Airline.h"
@@ -30,6 +31,10 @@ class Graph {
         list<Edge> flights; // The list of outgoing edges (to adjacent nodes)
         bool visited;   // As the node been visited on a search?
         int distance;
+        int low;
+        int num;
+        bool inStack;
+        bool isArt;
         Airport airport;
         vector<vector<int>> path;
         vector<vector<Airline>> pathAirlines;
@@ -45,17 +50,19 @@ public:
     void addEdge(int src, int dest, const Airline& airline);
     void addAirports(queue<Airport> airports);
     void addCityAirports();
-    void showCityAirports(string city);
+    void showCityAirports(const string& city);
     unordered_map<string,int> getAirports();
+    unordered_map<string,Airline> getAirlineCodes() ;
     void getAirlines(string file);
-    void getFlights(string file);
-    void dfs(int v);
+    int getFlights(string file);
+    void dfs_art(int v, stack<int>* node_stack, list<int>* res,int index);
     void bfs(int v);
+    void articulationPoints();
     void printPath(const string& end);
     void getShortestPath(const string& start,const string& end);
     void getAvailableFlights(const string& airport);
     void getDestinations(const string& airport);
-    void getShortestFilteredPath(const string& start,const string& end,set<string> permittedAirlines);
+    void getShortestFilteredPath(const string& start,const string& end,const set<string>& permittedAirlines);
     void getCloseAirports(double latitude, double longitude, int kilometers);
     void getStats(const string& start,int nFlights);
 };
