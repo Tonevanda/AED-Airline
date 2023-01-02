@@ -32,24 +32,24 @@ queue<Airport> getAirports(string file){
     return airports;
 }
 
-void menuLocal() {
+void menuLocal(const Graph& airportGraph) {
     bool canRun = true;
     int n;
     while (canRun) {
         int input;
-        cout << "From where?: \n"
+        cout << "Choose a starting point. \n"
                 "1: Airport\n"
                 "2: City\n"
-                "3: coordinates\n"
+                "3: Coordinates\n"
                 "0: Return\n";
         while (!(cin >> input)) {
             cout << "Invalid input!\n\n";
             cin.clear();
             cin.ignore(INT_MAX, '\n');
-            cout << "From where?: \n"
+            cout << "Choose a starting point. \n"
                     "1: Airport\n"
                     "2: City\n"
-                    "3: coordinates\n"
+                    "3: Coordinates\n"
                     "0: Return\n";
         }
         cin.clear();
@@ -68,6 +68,9 @@ void menuLocal() {
                 }
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
+                cout << "Choose a course of action.\n"
+                        "1: Shortest path to another airport\n"
+                        "2: Check information"
         }
     }
 }
@@ -80,9 +83,10 @@ int main() {
     airportGraph.addAirports(airports);
     airportGraph.getAirlines("dataset/airlines.csv");
     airportGraph.getFlights("dataset/flights.csv");
+    menuLocal(airportGraph);
     //airportGraph.showCityAirports("Paris");
 
-    airportGraph.getShortestPath("CDG","LGA");
+    //airportGraph.getShortestPath("CDG","LGA");
 
     //airportGraph.getAvailableFlights("CDG");
 

@@ -39,7 +39,7 @@ class Graph {
     vector<Node> nodes; // The list of nodes being represented
     unordered_map<string,int> airportIndex; //maps the airport codes to the index of the airport(node) in the vector nodes
     unordered_map<string,Airline> airlineCodes; //maps the airline codes to the airlines
-    unordered_map<string,vector<Airport>> cityAirports;
+    unordered_map<string,vector<Airport>> cityAirports; //maps the city name to the airports in that city
 public:
     Graph(int nodes);
     void addEdge(int src, int dest, const Airline& airline);
