@@ -55,14 +55,16 @@ public:
     unordered_map<string,Airline> getAirlineCodes() ;
     void getAirlines(string file);
     int getFlights(string file);
-    void dfs_art(int v, stack<int>* node_stack, list<int>* res,int index);
+    void dfsArt(int v, stack<int>* node_stack, list<int>* res, int index);
+    void dfsFilteredArt(int v, stack<int>* node_stack, list<int>* res,int index, const set<string>& permittedAirlines);
     void bfs(int v);
-    void articulationPoints();
+    void articulationPoints(const set<string>& permittedAirlines);
     void printPath(const string& end);
     void getShortestPath(const string& start,const string& end);
     void getAvailableFlights(const string& airport);
     void getDestinations(const string& airport);
     void getShortestFilteredPath(const string& start,const string& end,const set<string>& permittedAirlines);
+    void getShortestFilteredPathFromCity(string city,const string& end,const set<string>& permittedAirlines);
     void getCloseAirports(double latitude, double longitude, int kilometers);
     void getStats(const string& start,int nFlights);
 };

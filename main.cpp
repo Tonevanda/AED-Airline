@@ -52,7 +52,6 @@ void menu(Graph& airportGraph,int nflights) {
         }
         cin.clear();
         cin.ignore(INT_MAX, '\n');
-
         switch (input) {
             case 0:{
                 string code;
@@ -170,6 +169,9 @@ void menu(Graph& airportGraph,int nflights) {
                 }
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
+
+                cout<<endl;
+
             }
         }
     }
@@ -184,9 +186,9 @@ int main() {
     airportGraph.addAirports(airports);
     airportGraph.getAirlines("dataset/airlines.csv");
     int nflights = airportGraph.getFlights("dataset/flights.csv");
-    //cout << nflights;
+    //cout << nflights << endl;
     airportGraph.addCityAirports();
-    menu(airportGraph,nflights);
+    //menu(airportGraph,nflights);
 
     //airportGraph.showCityAirports("Paris");
 
@@ -206,8 +208,11 @@ int main() {
     //airportGraph.getCloseAirports(49.012779,2.550000,1000);
 
     //airportGraph.getStats("CDG",3);
+    set<string> permittedAirlines;
+    permittedAirlines.insert("AAL");
+    //airportGraph.articulationPoints(permittedAirlines);
 
-    //airportGraph.articulationPoints();
+    airportGraph.getShortestFilteredPathFromCity("Paris","JFK",permittedAirlines);
 
     cout << "Got here";
     return 0;

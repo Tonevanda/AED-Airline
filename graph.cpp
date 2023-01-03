@@ -110,22 +110,33 @@ int Graph::getFlights(string file){
     return counter;
 }
 
-void Graph::articulationPoints() {
-    list<int> answer;
+void Graph::articulationPoints(const set<string>& permittedAirlines) {
+    list<int> res;
     for (Node& node : nodes) {
         node.visited = false;
         node.inStack = false;
         node.isArt = false;
     }
     stack<int> node_stack;
+
     for (int i = 1; i < nodes.size(); i++) {
         if (!nodes[i].visited)
-            dfs_art(i, &node_stack, &answer, 1);
+            if(permittedAirlines.empty())
+                dfsArt(i, &node_stack, &res,1);
+            else dfsFilteredArt(i, &node_stack, &res, 1, permittedAirlines);
     }
-    cout << "There are "<< answer.size() << " articulation points.\n";
+
+    /*for(auto it = res.begin();it!=res.end();it++){
+        cout << nodes[*it].airport.getCode() << "\n";
+    }
+     */
+    cout << res.size() << endl;
+    for(auto it = res.begin();it!=res.end();it++){
+        cout << nodes[*it].airport.getCode() << endl;
+    }
 }
 
-void Graph::dfs_art(int v, stack<int>* node_stack, list<int>* res, int index) {
+void Graph::dfsArt(int v, stack<int>* node_stack, list<int>* res, int index) {
     nodes[v].visited = true;
     nodes[v].low = index;
     nodes[v].num = index;
@@ -134,11 +145,11 @@ void Graph::dfs_art(int v, stack<int>* node_stack, list<int>* res, int index) {
     node_stack->push(v);
 
     int count = 0;
-    for (const auto& e : nodes[v].flights) {
+    for (auto e : nodes[v].flights) {
         int w = e.dest;
         if (!nodes[w].visited) {
             count++;
-            dfs_art(w, node_stack, res, index);
+            dfsArt(w, node_stack, res, index);
             nodes[v].low = min(nodes[v].low, nodes[w].low);
         }
         else if (nodes[w].inStack) {
@@ -152,6 +163,40 @@ void Graph::dfs_art(int v, stack<int>* node_stack, list<int>* res, int index) {
         else if (!nodes[v].isArt && nodes[v].num == 1 && count > 1) {
             res->push_back(v);
             nodes[v].isArt = true;
+        }
+    }
+    res->sort();
+}
+
+void Graph::dfsFilteredArt(int v, stack<int>* node_stack, list<int>* res, int index, const set<string>& permittedAirlines) {
+    nodes[v].visited = true;
+    nodes[v].low = index;
+    nodes[v].num = index;
+    index++;
+    nodes[v].inStack = true;
+    node_stack->push(v);
+
+    int count = 0;
+    for (const auto& e : nodes[v].flights) {
+        int w = e.dest;
+        for (const Airline& airline: e.airlines) {
+            if(permittedAirlines.find(airline.getCode())!=permittedAirlines.end()) {
+                if (!nodes[w].visited) {
+                    count++;
+                    dfsFilteredArt(w, node_stack, res, index, permittedAirlines);
+                    nodes[v].low = min(nodes[v].low, nodes[w].low);
+                } else if (nodes[w].inStack) {
+                    nodes[v].low = min(nodes[v].low, nodes[w].num);
+                }
+
+                if (nodes[v].num != 1 && !nodes[v].isArt && nodes[w].low >= nodes[v].num) {
+                    res->push_back(v);
+                    nodes[v].isArt = true;
+                } else if (!nodes[v].isArt && nodes[v].num == 1 && count > 1) {
+                    res->push_back(v);
+                    nodes[v].isArt = true;
+                }
+            }
         }
     }
     res->sort();
@@ -373,7 +418,79 @@ void Graph::getShortestFilteredPath(const string& start,const string& end,const 
     }
     printPath(end);
 }
-
+void Graph::getShortestFilteredPathFromCity(string city,const string& end,const set<string>& permittedAirlines){
+    vector<int> startingPoints;
+    for (int i=1; i<=n; i++) {
+        nodes[i].visited = false;
+        nodes[i].distance = -1;
+        if(nodes[i].airport.getCity()==city){
+            startingPoints.push_back(i);
+        }
+    }
+    for(auto v:startingPoints){
+        int finalpos=INT_MAX;
+        queue<int> q; // queue of unvisited nodes
+        q.push(v);
+        nodes[v].distance = 0;
+        nodes[v].visited = true;
+        nodes[v].path.clear();
+        nodes[v].path.push_back({v});
+        while (!q.empty()) { // while there are still unvisited nodes
+            int current = q.front(); q.pop();
+            if(nodes[current].distance==finalpos){break;}
+            for (const auto& flight : nodes[current].flights) {
+                int nextNode = flight.dest;
+                if(nextNode==airportIndex[end]){
+                    if(!nodes[nextNode].pathAirlines.empty() && nodes[nextNode].path.front().size()>nodes[current].path.front().size()+1){
+                        nodes[nextNode].pathAirlines.clear();
+                    }
+                    else if(!nodes[nextNode].pathAirlines.empty() && nodes[nextNode].path.front().size()<nodes[current].path.front().size()+1){
+                        break;
+                    }
+                    finalpos=nodes[current].distance + 1;
+                }
+                if ((!nodes[nextNode].visited || nodes[nextNode].distance==nodes[current].distance + 1)) {
+                    bool hasValidAirline=false;
+                    for(const auto& airline: flight.airlines){      //iterate over every airline in an edge(flight)
+                        if(permittedAirlines.find(airline.getCode()) != permittedAirlines.end()) {
+                            hasValidAirline=true;
+                            for (const auto &pathIt: nodes[current].path) {   //iterate over every path(vector with nodes) and add itself
+                                vector<int> temp = pathIt;             //to the end of every path
+                                temp.push_back(nextNode);
+                                nodes[nextNode].path.push_back(temp);
+                            }
+                            if (nodes[current].pathAirlines.empty()) {  //if the vector of vector of airlines is empty
+                                vector<Airline> temp2;                 //creates an empty vector, adds itself to it and adds that
+                                temp2.push_back(airline);             //vector to the list of pathAirlines
+                                nodes[nextNode].pathAirlines.push_back(temp2);
+                            } else {
+                                for (const auto &airlines: nodes[current].pathAirlines) { //iterate over every path of airlines in the vector pathAirlines
+                                    vector<Airline> temp2 = airlines;              //create vector equal to the vector of airlines and adds itself to it
+                                    temp2.push_back(airline);                   //then adds that vector to the list of pathAirlines
+                                    nodes[nextNode].pathAirlines.push_back(temp2);
+                                }
+                            }
+                        }
+                    }
+                    if(hasValidAirline){
+                        q.push(nextNode);
+                        nodes[nextNode].visited = true;
+                        nodes[nextNode].distance = nodes[current].distance + 1;
+                    }
+                }
+            }
+        }
+        for (int i=1; i<=n; i++) {
+            nodes[i].visited = false;
+            nodes[i].distance = -1;
+            if(i!=airportIndex[end]){
+                nodes[i].path.clear();
+                nodes[i].pathAirlines.clear();
+            }
+        }
+    }
+    printPath(end);
+}
 void Graph::getAvailableFlights(const string& airport){
     int count = 1;
     set<string> airlineCount;
