@@ -59,8 +59,8 @@ double Airport::distanceTo(double latitude2, double longitude2) const {
     return rad * c;
 }
 
-bool Airport::isBetween(double latitude, double longitude, int kilometers) const {
-    if(this->distanceTo(latitude,longitude)<kilometers)
+bool Airport::isBetween(double latitude, double longitude, int x) const {
+    if(this->distanceTo(latitude,longitude)<x)
         return true;
     return false;
 }
