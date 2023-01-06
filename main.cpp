@@ -41,17 +41,19 @@ void menu(Graph& airportGraph) {
     set<string> permittedAirlines;
     while (canRun) {
         int input;
-        cout << "Do you wish to specify airlines?\n"
+        cout << "Do you wish to specify airlines/add to to the list of permited airlines?\n"
                 "1: Yes\n"
                 "2: No\n"
+                "3: Clear List\n"
                 "0: End Program\n";
         while (!(cin >> input)) {
             cout << "Invalid input!\n\n";
             cin.clear();
             cin.ignore(INT_MAX, '\n');
-            cout << "Do you wish to specify airlines?\n"
+            cout << "Do you wish to specify airlines/add to to the list of permited airlines?\n"
                     "1: Yes\n"
                     "2: No\n"
+                    "3: Clear List\n"
                     "0: End Program\n";
         }
         cin.clear();
@@ -88,6 +90,9 @@ void menu(Graph& airportGraph) {
                 canRun = false;
                 break;
             }
+            case 3:
+                permittedAirlines.clear();
+                break;
             default:{
                 cout << "Invalid input!\n\n";
                 canRun1 = false;
