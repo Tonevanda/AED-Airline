@@ -41,7 +41,7 @@ void menu(Graph& airportGraph) {
     set<string> permittedAirlines;
     while (canRun) {
         int input;
-        cout << "Do you wish to specify airlines/add to to the list of permited airlines?\n"
+        cout << "Do you wish to specify airlines/Add to to the list of permitted airlines?\n"
                 "1: Yes\n"
                 "2: No\n"
                 "3: Clear List\n"
@@ -50,7 +50,7 @@ void menu(Graph& airportGraph) {
             cout << "Invalid input!\n\n";
             cin.clear();
             cin.ignore(INT_MAX, '\n');
-            cout << "Do you wish to specify airlines/add to to the list of permited airlines?\n"
+            cout << "Do you wish to specify airlines/Add to to the list of permitted airlines?\n"
                     "1: Yes\n"
                     "2: No\n"
                     "3: Clear List\n"
@@ -68,12 +68,12 @@ void menu(Graph& airportGraph) {
                 bool inputing = true;
                 while (inputing) {
                     string inputAirline;
-                    cout << "input the airline code or q to end\n";
+                    cout << "Input the airline code or q to end\n";
                     while (!(cin >> inputAirline)) {
                         cout << "Invalid input!\n\n";
                         cin.clear();
                         cin.ignore(INT_MAX, '\n');
-                        cout << "input the airline code\n";
+                        cout << "Input the airline code\n";
                     }
                     cin.clear();
                     cin.ignore(INT_MAX, '\n');
@@ -144,7 +144,7 @@ void menu(Graph& airportGraph) {
                                     "0: Go back\n"
                                     "1: Shortest path to another airport\n"
                                     "2: Check information\n"
-                                    "3: How far you can go with x Flights\n"
+                                    "3: How far you can go with X Flights\n"
                                     "9: End Program\n";
 
                             while (!(cin >> input)) {
@@ -155,7 +155,7 @@ void menu(Graph& airportGraph) {
                                         "0: Go back\n"
                                         "1: Shortest path to another airport\n"
                                         "2: Check information\n"
-                                        "3: How far you can go with x Flights\n"
+                                        "3: How far you can go with X Flights\n"
                                         "9: End Program\n";
                             }
                             cin.clear();
@@ -338,23 +338,23 @@ void menu(Graph& airportGraph) {
                     bool canRun2 = true;
                     while(canRun2){
                         int check;
-                        cout << "which statistic do you wish to check?\n"
+                        cout << "Which statistic do you wish to check?\n"
                                 "0: Go back\n"
                                 "1: Total flights/airports/airlines\n"
                                 "2: Articulation Points\n"
                                 "3: Graph diameter\n"
-                                "4: Top x airports with most fligths\n"
+                                "4: Top X airports with most flights\n"
                                 "9: End Program\n";
                         while (!(cin >> check)) {
                             cout << "Invalid input!\n\n";
                             cin.clear();
                             cin.ignore(INT_MAX, '\n');
-                            cout << "which statistic do you wish to check?\n"
+                            cout << "Which statistic do you wish to check?\n"
                                     "0: Go back\n"
                                     "1: Total flights/airports/airlines\n"
                                     "2: Articulation Points\n"
                                     "3: Graph diameter\n"
-                                    "4: Top x airports with most fligths\n"
+                                    "4: Top X airports with most flights\n"
                                     "9: End Program\n";
                         }
                         cin.clear();
@@ -365,7 +365,7 @@ void menu(Graph& airportGraph) {
                                 canRun1=true;
                                 break;
                             case 1:
-                                cout<<"This graph has "<<airportGraph.getNAirports()<<" airports, "<<airportGraph.getNFlights()<<" fligths, "<<airportGraph.getNAirlines()<<" airlines."<<endl;
+                                cout<<"This graph has "<<airportGraph.getNAirports()<<" airports, "<<airportGraph.getNFlights()<<" flights, "<<airportGraph.getNAirlines()<<" airlines."<<endl;
                                 break;
                             case 2:
                                 airportGraph.articulationPoints(permittedAirlines);
