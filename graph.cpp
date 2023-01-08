@@ -382,7 +382,6 @@ void Graph::articulationPoints(const set<string>& permittedAirlines) {
         }
     }
 
-    cout << "There are " << res.size() << " articulation points.\n";
     cout << "The following are the articulation points : \n";
     for(int & index : res){
         cout << "    " << nodes[index].airport.getCode() << ", "
@@ -392,6 +391,7 @@ void Graph::articulationPoints(const set<string>& permittedAirlines) {
         << nodes[index].airport.getLongitude() << ", "
         << nodes[index].airport.getLatitude() << endl;
     }
+    cout << "There are " << res.size() << " articulation points.\n";
 }
 
 void Graph::dfsArt(int v, stack<int>* node_stack, list<int>* res, int index) {
@@ -569,6 +569,7 @@ void Graph::getStats(const string& start,int maxFlights){
     }
     cout<<"Total: "<<n1-1<<" Airports, "<<n2-1<<" Cities, "<<n3-1<<" Countries"<<endl;
 }
+
 
 void Graph::clearData(){
     for(int i=1;i<=n;i++){

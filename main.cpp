@@ -73,7 +73,7 @@ void menu(Graph& airportGraph) {
                         cout << "Invalid input!\n\n";
                         cin.clear();
                         cin.ignore(INT_MAX, '\n');
-                        cout << "Input the airline code\n";
+                        cout << "Input the airline code or q to end\n";
                     }
                     cin.clear();
                     cin.ignore(INT_MAX, '\n');
@@ -92,10 +92,12 @@ void menu(Graph& airportGraph) {
             }
             case 3:
                 permittedAirlines.clear();
+                canRun1 = false;
                 break;
             default:{
                 cout << "Invalid input!\n\n";
                 canRun1 = false;
+                break;
             }
         }
         while (canRun1) {
@@ -144,7 +146,7 @@ void menu(Graph& airportGraph) {
                                     "0: Go back\n"
                                     "1: Shortest path to another airport\n"
                                     "2: Check information\n"
-                                    "3: How far you can go with X Flights\n"
+                                    "3: How far you can go with X flights\n"
                                     "9: End Program\n";
 
                             while (!(cin >> input)) {
@@ -155,7 +157,7 @@ void menu(Graph& airportGraph) {
                                         "0: Go back\n"
                                         "1: Shortest path to another airport\n"
                                         "2: Check information\n"
-                                        "3: How far you can go with X Flights\n"
+                                        "3: How far you can go with X flights\n"
                                         "9: End Program\n";
                             }
                             cin.clear();
@@ -190,12 +192,12 @@ void menu(Graph& airportGraph) {
                                     break;
                                 case 3:
                                     int num;
-                                    cout << "Input number of Flights:\n";
+                                    cout << "Input number of flights:\n";
                                     while (!(cin >> num)) {
                                         cout << "Invalid input!\n\n";
                                         cin.clear();
                                         cin.ignore(INT_MAX, '\n');
-                                        cout << "Input number of Flights:\n";;
+                                        cout << "Input number of flights:\n";;
                                     }
                                     cin.clear();
                                     cin.ignore(INT_MAX, '\n');
@@ -208,6 +210,7 @@ void menu(Graph& airportGraph) {
                                     break;
                                 default:
                                     cout << "Invalid input!\n\n";
+                                    break;
                             }
                         }
                     }
@@ -283,6 +286,7 @@ void menu(Graph& airportGraph) {
                                     break;
                                 default:
                                     cout << "Invalid input!\n\n";
+                                    break;
                             }
 
                         }
@@ -400,6 +404,7 @@ void menu(Graph& airportGraph) {
                                 break;
                             default:
                                 cout << "Invalid input!\n\n";
+                                break;
                         }
                     }
                     break;
@@ -411,6 +416,7 @@ void menu(Graph& airportGraph) {
                 }
                 default:{
                     cout << "Invalid input!\n\n";
+                    break;
                 }
             }
         }
@@ -427,43 +433,6 @@ int main() {
     airportGraph.getFlights("dataset/flights.csv");
     airportGraph.addCityAirports();
     menu(airportGraph);
-    //airportGraph.airportMostFlights(3);
-    //airportGraph.calculateDiameter();
-    //airportGraph.showCityAirports("Paris");
-    //airportGraph.getShortestPath("CDG","LGA");
-
-    //airportGraph.getAvailableFlights("CDG");
-
-    //airportGraph.getDestinations("CDG");
-
-    set<string> permittedAirlines;
-
-    //airportGraph.getShortestFilteredPath("CDG","LGA",permittedAirlines);
-
-    //list<int> temp = airportGraph.getCloseAirports(49.012779,2.550000,50);
-    //airportGraph.getShortestFilteredPathFromList(temp,"JFK",permittedAirlines);
-    //airportGraph.getStats("CDG",3);
-    //set<string> permittedAirlines2;
-    //permittedAirlines2.insert("TOK");
-    //airportGraph.articulationPoints(permittedAirlines2);
-
-    //airportGraph.getShortestFilteredPathFromList("Paris","JFK",permittedAirlines);
-    //airportGraph.isValidAirport("deez nuts");
-    //airportGraph.isValidAirline("deez nuts");
-    //airportGraph.isValidCity("deez nuts");
     cout << "Got here";
     return 0;
 }
-
-
-/* verificar estatistica
- * adiciona opções de menu for unused functions
- * numero minimo de airlines num path
- *
- *
- *
- * EXTRA:
- * print path diferente?????
- *
- *
- */
