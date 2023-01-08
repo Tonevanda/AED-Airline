@@ -355,8 +355,10 @@ void Graph::addCityAirports(){
 }
 
 void Graph::showCityAirports(const string& city){
+    int count=1;
     for(Airport airport : cityAirports[city]){
-        cout << airport.getCode() << ", " << airport.getName() << ", " << airport.getCity() << endl;
+        cout << count << ": " << airport.getCode() << ", " << airport.getName() << ", " << airport.getCity() << endl;
+        count++;
     }
     cout << endl;
 }
@@ -565,7 +567,7 @@ void Graph::getStats(const string& start,int maxFlights){
         cout<<n3<<": "<<it<<endl;
         n3++;
     }
-    cout<<"Total: "<<n1<<" Airports, "<<n2<<" Cities, "<<n3<<" Countries"<<endl;
+    cout<<"Total: "<<n1-1<<" Airports, "<<n2-1<<" Cities, "<<n3-1<<" Countries"<<endl;
 }
 
 void Graph::clearData(){

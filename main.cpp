@@ -330,8 +330,15 @@ void menu(Graph& airportGraph) {
                     cin.clear();
                     cin.ignore(INT_MAX, '\n');
                     cout<<endl;
-                    airportGraph.getShortestFilteredPathFromList(airportGraph.getCloseAirports(Latitude,Longitude,range),destination,permittedAirlines);
-                    airportGraph.clearData();
+                    if(airportGraph.isValidAirport(destination)){
+                        if(permittedAirlines.empty()){
+                            airportGraph.getShortestPathFromList(airportGraph.getCloseAirports(Latitude,Longitude,range),destination);
+                        }
+                        else{
+                            airportGraph.getShortestFilteredPathFromList(airportGraph.getCloseAirports(Latitude,Longitude,range),destination,permittedAirlines);
+                        }
+                        airportGraph.clearData();
+                    }
                     break;
                 }
                 case 4:{
@@ -429,15 +436,12 @@ int main() {
 
     //airportGraph.getDestinations("CDG");
 
-    //set<string> permittedAirlines;
-
-    //permittedAirlines.insert("AFR");
-    //permittedAirlines.insert("DAL");
+    set<string> permittedAirlines;
 
     //airportGraph.getShortestFilteredPath("CDG","LGA",permittedAirlines);
 
-    //airportGraph.getCloseAirports(49.012779,2.550000,1000);
-
+    //list<int> temp = airportGraph.getCloseAirports(49.012779,2.550000,50);
+    //airportGraph.getShortestFilteredPathFromList(temp,"JFK",permittedAirlines);
     //airportGraph.getStats("CDG",3);
     //set<string> permittedAirlines2;
     //permittedAirlines2.insert("TOK");

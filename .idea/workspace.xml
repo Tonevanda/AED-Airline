@@ -22,14 +22,13 @@
   <component name="ChangeListManager">
     <list default="true" id="b12c0037-4117-4b91-a6f1-acdeaba39a2c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Airport.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Airport.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Airport.h" beforeDir="false" afterPath="$PROJECT_DIR$/Airport.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graph.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/graph.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graph.h" beforeDir="false" afterPath="$PROJECT_DIR$/graph.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <list id="7c159fdd-ec04-45a1-9e07-40ae71a52b2b" name="Changes by tomas" comment="" />
-    <list id="4bc87afd-3a4f-4472-88ca-ea46db5f2173" name="Changes by Tonevanda" comment="" />
+    <list id="4bc87afd-3a4f-4472-88ca-ea46db5f2173" name="Changes by Tonevanda" comment="">
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,6 +40,15 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/main.cpp">
+      <ranges>
+        <range start1="332" end1="334" start2="332" end2="341" changelist="b12c0037-4117-4b91-a6f1-acdeaba39a2c" />
+        <range start1="431" end1="435" start2="438" end2="439" changelist="4bc87afd-3a4f-4472-88ca-ea46db5f2173" />
+        <range start1="438" end1="440" start2="442" end2="444" changelist="4bc87afd-3a4f-4472-88ca-ea46db5f2173" />
+      </ranges>
+    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -64,7 +72,7 @@
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/tonevanda/Documents/GitHub/Projeto-AED-2&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tomas/Downloads/aed2122_ci2_pratica&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -93,7 +101,18 @@
       <workItem from="1672256593209" duration="243000" />
       <workItem from="1672259739143" duration="13150000" />
       <workItem from="1672277815557" duration="1240000" />
-      <workItem from="1672326696139" duration="7036000" />
+      <workItem from="1672326696139" duration="17251000" />
+      <workItem from="1672355076631" duration="295000" />
+      <workItem from="1672361775723" duration="6350000" />
+      <workItem from="1672418091970" duration="11578000" />
+      <workItem from="1672437366045" duration="694000" />
+      <workItem from="1672664355473" duration="21755000" />
+      <workItem from="1672748113459" duration="13430000" />
+      <workItem from="1672783967629" duration="11469000" />
+      <workItem from="1672853275257" duration="7000" />
+      <workItem from="1672930330847" duration="29854000" />
+      <workItem from="1673188639969" duration="82000" />
+      <workItem from="1673188778757" duration="1767000" />
     </task>
     <servers />
   </component>
@@ -112,14 +131,10 @@
     </option>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/graph.cpp</url>
-          <line>163</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="CMakeRunConfiguration">
+        <watch expression="this-&gt;nodes[3].isArt" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
